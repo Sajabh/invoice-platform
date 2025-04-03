@@ -7,6 +7,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
+import { signIn } from "../utils/auth";
 
 const login = () => {
   return (
@@ -18,18 +19,26 @@ const login = () => {
             <CardDescription>Please enter your email to login.</CardDescription>
           </CardHeader>
           <CardContent>
-            <form className="flex flex-col gap-y-4">
+            <form
+              action={async (formData) => {
+                "use server";
+                await signIn("nodemailer", formData);
+              }}
+              className="flex flex-col gap-y-4"
+            >
               <div className="flex flex-col gap-y-2">
                 <Label>
                   Email
                   <input
+                    name="email"
                     type="email"
+                    required
                     placeholder="Enter your email"
                     className="border rounded-md p-2 w-full mt-1"
                   />
                 </Label>
               </div>
-              <Button>Submit</Button>
+              <Button type="submit">Submit</Button>
             </form>
           </CardContent>
         </Card>
