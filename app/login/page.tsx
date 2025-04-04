@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -7,10 +6,19 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
-import { signIn } from "../utils/auth";
+import { auth, signIn } from "../utils/auth";
+import SubmitButton from "../components/submitButtons";
+import { redirect } from "next/navigation";
 
-const login = () => {
+const login = async () => {
+  // Check if user is already authenticated
+  const session = await auth();
+  if (session?.user) {
+    redirect("/dashboard");
+  }
+  
   return (
+    // Render the login form
     <>
       <div className="flex h-screen w-full items-center justify-center px-4">
         <Card className="w-full max-w-sm">
@@ -38,7 +46,7 @@ const login = () => {
                   />
                 </Label>
               </div>
-              <Button type="submit">Submit</Button>
+              <SubmitButton />
             </form>
           </CardContent>
         </Card>
