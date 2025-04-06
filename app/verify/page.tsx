@@ -34,7 +34,7 @@ const Verify = () => {
             </div>
         </CardContent>
         <CardFooter>
-            <Link href="/" className={buttonVariants({ className: "w-full", variant: "outline" })}>
+            <Link href="/dashboard" className={buttonVariants({ className: "w-full", variant: "outline" })}>
                 <ArrowLeft className="size-4 mr-2"/> Back to Homepage
             </Link>
         </CardFooter>

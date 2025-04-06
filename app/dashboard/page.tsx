@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { signOut } from "../utils/auth";
 import requireUser from "../utils/hooks";
 
@@ -14,6 +13,10 @@ export default async function DashboardRout() {
       <p className="mt-4 text-lg text-gray-600">Welcome to your dashboard!</p>
       <form
         className="mt-6"
+        action={async () => {
+          "use server";
+          await signOut();
+        }}
       >
         <button type="submit"> SignOut </button>
       </form>
