@@ -1,12 +1,30 @@
+import { prisma } from "@/lib/prisma";
 import { signOut } from "../utils/auth";
 import requireUser from "../utils/hooks";
+import { redirect } from "next/navigation";
 
-export default async function DashboardRout() {
-  /* const session = await auth();
-    if (!session?.user) {
-        redirect("/login"); // private mode????
-    } */
-  await requireUser();
+
+async function getData(userId: string) {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        id: true,
+        lastName: true,
+        firstName: true,
+        address: true,
+      },
+    });
+    
+    if (!data?.firstName || !data?.lastName || !data?.address) {
+      redirect("/onboarding")
+    } 
+  }
+  
+  export default async function DashboardRout() {
+    const session = await requireUser();
+    const data = await getData(session.user?.id as string);
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
