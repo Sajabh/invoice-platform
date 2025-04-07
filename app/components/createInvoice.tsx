@@ -14,10 +14,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
 import { Calendar1Icon } from "lucide-react";
 import { useState } from "react";
 import { date } from "zod";
+import SubmitButton from "./submitButtons";
 
 const CreateInvoice = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -78,7 +80,7 @@ const CreateInvoice = () => {
             </div>
           </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
           <div className="flex flex-col gap-2">
             <Label>Date</Label>
             <Popover>
@@ -105,19 +107,66 @@ const CreateInvoice = () => {
               </PopoverContent>
             </Popover>
           </div>
-            <div className="flex flex-col gap-2">
-              <Label>Invoice Due</Label>
-              <Select>
-                <SelectTrigger className="w-[280px]">
-                  <SelectValue placeholder="Select due date"></SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="0">Due on receipt</SelectItem>
-                  <SelectItem value="15">Net 15</SelectItem>
-                  <SelectItem value="30">Net 30</SelectItem>
-                </SelectContent>
-              </Select>
+          <div className="flex flex-col gap-2">
+            <Label>Invoice Due</Label>
+            <Select>
+              <SelectTrigger className="w-[280px]">
+                <SelectValue placeholder="Select due date"></SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="0">Due on receipt</SelectItem>
+                <SelectItem value="15">Net 15</SelectItem>
+                <SelectItem value="30">Net 30</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-12 gap-4 mb-2 font-medium">
+          <p className="col-span-6">Description</p>
+          <p className="col-span-2">Quantity</p>
+          <p className="col-span-2">Rate</p>
+          <p className="col-span-2">Amount</p>
+        </div>
+        <div className="grid grid-cols-12 gap-4 mb-4">
+          <div className="col-span-6">
+            <Textarea placeholder="Item name & description" />
+            <p className="text-red-500 text-sm"></p>
+          </div>
+          <div className="col-span-2">
+            <Input type="number" placeholder="0" />
+            <p className="text-red-500 text-sm"></p>
+          </div>
+          <div className="col-span-2">
+            <Input type="number" placeholder="0" />
+            <p className="text-red-500 text-sm"></p>
+          </div>
+          <div className="col-span-2">
+            <Input disabled />
+          </div>
+        </div>
+        <div className="flex justify-end">
+          <div className="w-1/3">
+            <div className="flex justify-between py-2">
+              <span>Subtotal</span>
+              <span>50$</span>
             </div>
+            <div className="flex justify-between py-2 border-t">
+              <span>Total (USD)</span>
+              <span className="font-medium underline underline-offset-2">
+                50$
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <Label>Note</Label>
+          <Textarea placeholder="Add your Note/s right here..." />
+        </div>
+        <div className="flex items-center justify-end mt-6">
+          <div>
+            <SubmitButton text="Send Invoice to Client" />
+          </div>
         </div>
       </CardContent>
     </Card>
