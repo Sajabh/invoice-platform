@@ -46,7 +46,7 @@ const login = async () => {
                   />
                 </Label>
               </div>
-              <SubmitButton />
+              <SubmitButton text="Login"/>
             </form>
           </CardContent>
         </Card>
