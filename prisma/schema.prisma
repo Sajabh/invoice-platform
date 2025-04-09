@@ -25,6 +25,7 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+  invoices      Invoice[]
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,4 +89,36 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([userId, credentialID])
+}
+
+model Invoice {
+  id               String   @id @default(uuid())
+  invoiceName      String
+  total            Int
+  status           InvoiceStatus
+  date             DateTime
+  dueDate          Int
+  fromAddress     String
+  fromName        String
+  fromEmail       String
+  clientName      String
+  clientAddress   String
+  clientEmail     String
+  currency        String
+  invoiceNumber   Int
+  note            String?
+
+  invoiceItemsDescription   String
+  invoiceItemQuantity       Int
+  invoiceItemRate           Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userid String?
+  User   User? @relation(fields: [userid], references: [id])
+}
+
+enum InvoiceStatus {
+  PENDING
+  PAID
 }
