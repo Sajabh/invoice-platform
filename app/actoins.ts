@@ -86,13 +86,13 @@ export async function createInvoice(prevState: any, formData: FormData) {
       subject: "You are awesome!",
       text: "Congrats for sending test email with Mailtrap!",
       category: "Integration Test",
-      attachments: [
+      /* attachments: [
         {
           filename: "test.txt",
           content: Buffer.from("This is a hhhihihihihi test attachment").toString('base64'),
-          /* type: "text/plain"  // Adding MIME type is recommended */
+          // type: "text/plain"  // Adding MIME type is recommended
         }
-      ]
+      ] */
     })
     
 
