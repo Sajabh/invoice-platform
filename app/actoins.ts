@@ -6,6 +6,9 @@ import { invoiceSchema, onboardingSchema } from "./utils/zodSchemas";
 import requireUser from "./utils/hooks";
 import { prisma } from "@/lib/prisma";
 import { emailClient } from "./utils/mailtrap";
+import { sub } from "date-fns";
+import { format } from "path";
+import { formatCurrency } from "./utils/formatCurreny";
 
 // This function is used to onboard a user by updating their information in the database.
 export async function onboardUser(prevState: any, formData: FormData) {
@@ -76,25 +79,26 @@ export async function createInvoice(prevState: any, formData: FormData) {
   const recipients = [
     {
       email: "saja3bh@gmail.com",
-    }
+    },
   ];
-  
-  emailClient
-    .send({
-      from: sender,
-      to: recipients,
-      subject: "You are awesome!",
-      text: "Congrats for sending test email with Mailtrap!",
-      category: "Integration Test",
-      /* attachments: [
-        {
-          filename: "test.txt",
-          content: Buffer.from("This is a hhhihihihihi test attachment").toString('base64'),
-          // type: "text/plain"  // Adding MIME type is recommended
-        }
-      ] */
-    })
-    
+
+  emailClient.send({
+    from: sender,
+    to: recipients,
+    template_uuid: "21c61310-3493-4ecd-a9e7-221a97e56760",
+    template_variables: {
+      clientName: submission.value.clientName,
+      invoiceNumber: submission.value.invoiceNumber,
+      dueDate: new Intl.DateTimeFormat("en-US", {
+        dateStyle: "long",
+      }).format(new Date(submission.value.date)),
+      totalAmount: formatCurrency({
+        amount: submission.value.total,
+        currency: submission.value.currency as any,
+      }),
+      invoiceLink: "Test_InvoiceLink",
+    },
+  });
 
   return redirect("/dashboard/invoices");
 }
