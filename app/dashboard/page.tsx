@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { signOut } from "../utils/auth";
 import requireUser from "../utils/hooks";
 import { redirect } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 
 async function getData(userId: string) {
@@ -23,8 +24,9 @@ async function getData(userId: string) {
   }
   
   export default async function DashboardRout() {
-    const session = await requireUser();
-    const data = await getData(session.user?.id as string);
+     const session = await requireUser();
+    /*  const data = await getData(session.user?.id as string); */
+    await getData(session.user?.id as string);
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <h1 className="text-4xl font-bold text-gray-800">Dashboard</h1>
@@ -36,7 +38,7 @@ async function getData(userId: string) {
           await signOut();
         }}
       >
-        <button type="submit"> SignOut </button>
+        <Button type="submit"> SignOut </Button>
       </form>
     </div>
   );

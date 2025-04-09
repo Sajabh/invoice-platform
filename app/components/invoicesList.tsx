@@ -1,7 +1,34 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import InvoiceActions from "./invoiceActions";
+import { prisma } from "@/lib/prisma";
+import requireUser from "../utils/hooks";
+import { formatCurrency } from "../utils/formatCurreny";
+import { Badge } from "@/components/ui/badge";
 
-const InvoiceList = () => {
+async function getData(userId: string) {
+  const data = await prisma.invoice.findMany({
+    where: {
+      userid: userId,
+    },
+    select: {
+      id: true,
+      clientName: true,
+      total: true,
+      createdAt: true,
+      status: true,
+      invoiceNumber: true,
+      currency: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return data;
+}
+const InvoiceList = async () => {
+  const session = await requireUser();
+  const data = await getData(session.user?.id as string);
   return (
     <Table>
       <TableHeader>
@@ -15,16 +42,29 @@ const InvoiceList = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell>#1</TableCell>
-          <TableCell>Mohammad Hammad</TableCell>
-          <TableCell>$55.00</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>7/4/2025</TableCell>
-          <TableCell className="text-right">
-            <InvoiceActions />
-          </TableCell>
-        </TableRow>
+      {data.map((invoice) => (
+              <TableRow key={invoice.id}>
+                <TableCell>#{invoice.invoiceNumber}</TableCell>
+                <TableCell>{invoice.clientName}</TableCell>
+                <TableCell>
+                  {formatCurrency({
+                    amount: invoice.total,
+                    currency: invoice.currency as any,
+                  })}
+                </TableCell>
+                <TableCell>
+                  <Badge>{invoice.status}</Badge>
+                </TableCell>
+                <TableCell>
+                  {new Intl.DateTimeFormat("en-US", {
+                    dateStyle: "medium",
+                  }).format(invoice.createdAt)}
+                </TableCell>
+                <TableCell className="text-right">
+                  <InvoiceActions />
+                </TableCell>
+              </TableRow>
+            ))}
       </TableBody>
     </Table>
   );
