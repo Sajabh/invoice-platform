@@ -16,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "../utils/auth";
+import { Toaster } from "@/components/ui/sonner";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   const session = await requireUser(); // "use server" ==> use DashboardLinkd as hook
@@ -95,6 +96,7 @@ const DashboardLayout = async ({ children }: { children: ReactNode }) => {
           </main>
         </div>
       </div>
+      <Toaster richColors closeButton theme="light" />
     </>
   );
 };
