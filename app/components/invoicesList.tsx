@@ -18,6 +18,7 @@ async function getData(userId: string) {
       status: true,
       invoiceNumber: true,
       currency: true,
+      date: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -49,7 +50,7 @@ const InvoiceList = async () => {
                 <TableCell>
                   {formatCurrency({
                     amount: invoice.total,
-                    currency: invoice.currency as any,
+                    currency: invoice.currency as "USD" || "EUR",
                   })}
                 </TableCell>
                 <TableCell>
@@ -58,7 +59,7 @@ const InvoiceList = async () => {
                 <TableCell>
                   {new Intl.DateTimeFormat("en-US", {
                     dateStyle: "medium",
-                  }).format(invoice.createdAt)}
+                  }).format(invoice.date)}
                 </TableCell>
                 <TableCell className="text-right">
                   <InvoiceActions id={invoice.id} status={invoice.status}/>
