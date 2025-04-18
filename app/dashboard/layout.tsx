@@ -17,9 +17,28 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "../utils/auth";
 import { Toaster } from "@/components/ui/sonner";
+import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
+  async function getUser(userId: string) {
+    const data = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+      select: {
+        firstName: true,
+        lastName: true,
+        address: true,
+      },
+    });
+
+    if (!data?.firstName || !data.lastName || !data.address) {
+      redirect("/onboarding");
+    }
+  }
   const session = await requireUser(); // "use server" ==> use DashboardLinkd as hook
+  await getUser(session.user?.id as string);
   return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
