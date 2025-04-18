@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
 import requireUser from "../utils/hooks";
 import { formatCurrency } from "../utils/formatCurreny";
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 async function getData(userId: string) {
   const data = await prisma.invoice.findMany({
