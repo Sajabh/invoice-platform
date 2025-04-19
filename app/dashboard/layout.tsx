@@ -1,12 +1,4 @@
-import { ReactNode } from "react";
-import requireUser from "../utils/hooks";
-import Link from "next/link";
-import Logo from "@/public/logo.png";
-import Image from "next/image";
-import DashboardLinks from "../components/dashboardLinks";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, User2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,10 +7,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "../utils/auth";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Toaster } from "@/components/ui/sonner";
 import { prisma } from "@/lib/prisma";
+import Logo from "@/public/logo.png";
+import { Menu, User2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
+import { ReactNode } from "react";
+import DashboardLinks from "../components/dashboardLinks";
+import { signOut } from "../utils/auth";
+import requireUser from "../utils/hooks";
 
 const DashboardLayout = async ({ children }: { children: ReactNode }) => {
   async function getUser(userId: string) {

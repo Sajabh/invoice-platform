@@ -37,8 +37,8 @@ const Verify = () => {
             </div>
         </CardContent>
         <CardFooter>
-            <Link href="https://mail.google.com/mail/u/1/#inbox/FMfcgzQZTzfgrrccSDSnHjjWCGpXPrpl" className={buttonVariants({ className: "w-full", variant: "outline" })}>
-                <ArrowLeft className="size-4 mr-2"/> go to Gmail
+            <Link href="/" className={buttonVariants({ className: "w-full", variant: "outline" })}>
+                <ArrowLeft className="size-4 mr-2"/> Back to Home Page
             </Link>
         </CardFooter>
       </Card>

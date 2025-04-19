@@ -8,9 +8,9 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 async function getData(userId: string) {
-  const data = await prisma.invoice.findUnique({
+  const data = await prisma.invoice.findMany({
     where: {
-      id: userId,
+      userid: userId,
     },
     select: {
       id: true,
