@@ -28,6 +28,7 @@ import { Prisma } from "@prisma/client";
 
 interface iAppProps {
     // whole invoice table data
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   data: Prisma.InvoiceGetPayload<{}>;
 }
 
@@ -341,7 +342,7 @@ const EditInvoice = ({data} : iAppProps) => {
 
           <div className="flex items-center justify-end mt-6">
             <div>
-              <SubmitButton text="Send Invoice to Client" />
+              <SubmitButton text="Edit Invoice" />
             </div>
           </div>
         </form>

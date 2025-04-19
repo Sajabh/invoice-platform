@@ -132,7 +132,6 @@ export async function editInvoice(prevState: any, formData: FormData) {
       invoiceItemRate: submission.value.invoiceItemRate,
       invoiceName: submission.value.invoiceName,
       invoiceNumber: submission.value.invoiceNumber,
-      status: submission.value.status,
       total: submission.value.total,
       note: submission.value.note,
     },
