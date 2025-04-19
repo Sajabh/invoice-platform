@@ -28,7 +28,6 @@ import { Prisma } from "@prisma/client";
 
 interface iAppProps {
     // whole invoice table data
-  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   data: Prisma.InvoiceGetPayload<{}>;
 }
 
